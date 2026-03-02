@@ -121,8 +121,6 @@
 </head>
 <body>
 
-<div class="edit-hint">✏️ click any text to edit</div>
-
 <nav>
   <div class="nav-logo" contenteditable="true">toral@dev</div>
   <div class="nav-links">
@@ -207,7 +205,6 @@
     <span class="skill-tag" contenteditable="true">HTML & CSS</span>
     <span class="skill-tag" contenteditable="true">Git & GitHub</span>
     <span class="skill-tag" contenteditable="true">Web Development</span>
-    <button class="add-skill-btn" onclick="addSkill()">+ add_skill</button>
   </div>
 </section>
 
@@ -284,8 +281,6 @@
       </div>
       <p class="project-wip">work in progress</p>
     </div>
-
-    <button class="add-project-btn" onclick="addProject()">+ add_project()</button>
   </div>
 </section>
 
@@ -313,37 +308,7 @@
 
 <footer>// made with 💚 by toral biyani</footer>
 
-<script>
-  function addSkill() {
-    const grid = document.getElementById('skillsGrid');
-    const btn = grid.querySelector('.add-skill-btn');
-    const tag = document.createElement('span');
-    tag.className = 'skill-tag';
-    tag.contentEditable = 'true';
-    tag.textContent = 'new_skill';
-    grid.insertBefore(tag, btn);
-    tag.focus();
-    const range = document.createRange();
-    range.selectNodeContents(tag);
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
-  }
-  function addProject() {
-    const grid = document.getElementById('projectsGrid');
-    const btn = grid.querySelector('.add-project-btn');
-    const card = document.createElement('div');
-    card.className = 'project-card';
-    card.innerHTML = `
-      <div class="project-badge" contenteditable="true">🚀 project</div>
-      <div class="project-title" contenteditable="true">project_name</div>
-      <div class="project-desc" contenteditable="true">// describe your project here...</div>
-      <div class="project-tech"><span class="tech-chip" contenteditable="true">tech</span></div>
-      <div class="project-links"><a href="#" class="project-link">GitHub</a></div>`;
-    grid.insertBefore(card, btn);
-  }
-  document.querySelectorAll('.nav-logo, .stat-number, .stat-label, .project-title, .t-name').forEach(el => {
-    el.addEventListener('keydown', e => { if (e.key === 'Enter') e.preventDefault(); });
-  });
 </script>
 </body>
+
 </html>
