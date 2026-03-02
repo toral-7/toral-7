@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Toral Biyani | Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #00ff41;
+      --green-dim: #00cc33;
+      --green-dark: #003d0f;
+      --green-glow: rgba(0,255,65,0.15);
+      --bg: #0a0a0a;
+      --card: #0f110f;
+      --border: #1a2e1a;
+      --text: #c8ffc8;
+      --text-dim: #5a8a5a;
+      --text-muted: #4a7a4a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'JetBrains Mono', monospace; background: var(--bg); color: var(--text); }
+    body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px); pointer-events: none; z-index: 1000; }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--green-dim); border-radius: 3px; }
+    [contenteditable="true"] { outline: none; border-bottom: 1px dashed transparent; transition: all 0.2s; cursor: text; }
+    [contenteditable="true"]:hover { border-bottom: 1px dashed var(--green-dim); }
+    [contenteditable="true"]:focus { border-bottom: 1px dashed var(--green); background: rgba(0,255,65,0.04); border-radius: 2px; }
+    .edit-hint { position: fixed; bottom: 20px; right: 20px; background: var(--green-dark); color: var(--green); padding: 8px 14px; border-radius: 4px; font-size: 11px; z-index: 999; border: 1px solid var(--green-dim); box-shadow: 0 0 20px var(--green-glow); }
+    nav { position: fixed; top: 0; width: 100%; background: rgba(10,10,10,0.95); backdrop-filter: blur(8px); padding: 14px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 100; border-bottom: 1px solid var(--border); }
+    .nav-logo { font-size: 16px; font-weight: 600; color: var(--green); letter-spacing: 1px; }
+    .nav-logo::before { content: '> '; color: var(--text-dim); }
+    .nav-links a { color: var(--text-dim); text-decoration: none; margin-left: 24px; font-size: 12px; transition: color 0.2s; letter-spacing: 1px; }
+    .nav-links a::before { content: './'; color: var(--text-muted); }
+    .nav-links a:hover { color: var(--green); text-shadow: 0 0 8px var(--green); }
+    #hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 60px 60px; background: radial-gradient(ellipse at 30% 50%, rgba(0,255,65,0.05) 0%, transparent 60%); }
+    .terminal-window { background: var(--card); border: 1px solid var(--border); border-radius: 8px; width: 100%; max-width: 780px; box-shadow: 0 0 60px rgba(0,255,65,0.07); }
+    .terminal-bar { background: #111; padding: 10px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; border-radius: 8px 8px 0 0; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot.red { background: #ff5f56; } .dot.yellow { background: #ffbd2e; } .dot.green-dot { background: #27c93f; }
+    .terminal-title { font-size: 11px; color: var(--text-dim); margin: 0 auto; letter-spacing: 1px; }
+    .terminal-body { padding: 32px 36px; }
+    .t-line { margin-bottom: 6px; font-size: 14px; line-height: 1.7; }
+    .t-prompt { color: var(--text-dim); } .t-prompt::before { content: '$ '; color: var(--green); }
+    .t-output { color: var(--text); padding-left: 16px; }
+    .t-name { font-size: clamp(28px,4vw,48px); font-weight: 700; color: var(--green); text-shadow: 0 0 20px rgba(0,255,65,0.4); display: block; margin: 10px 0; }
+    .t-tag { color: var(--text-dim); font-size: 13px; }
+    .t-tagline { color: #7abf7a; font-size: 14px; margin: 8px 0 4px; padding-left: 16px; }
+    .t-oneliner { color: var(--text-dim); font-size: 13px; padding-left: 16px; font-style: italic; }
+    .t-blank { margin-bottom: 14px; }
+    .t-cursor { display: inline-block; width: 10px; height: 16px; background: var(--green); animation: blink 1s infinite; vertical-align: middle; margin-left: 4px; }
+    @keyframes blink { 0%,49%{opacity:1}50%,100%{opacity:0} }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; padding-left: 16px; }
+    .btn-primary { background: transparent; color: var(--green); padding: 10px 22px; border: 1px solid var(--green); border-radius: 4px; text-decoration: none; font-family: inherit; font-size: 13px; font-weight: 600; transition: all 0.2s; letter-spacing: 1px; }
+    .btn-primary::before { content: '> '; }
+    .btn-primary:hover { background: var(--green-glow); box-shadow: 0 0 20px rgba(0,255,65,0.2); }
+    .btn-secondary { background: transparent; color: var(--text-dim); padding: 10px 22px; border: 1px solid var(--border); border-radius: 4px; text-decoration: none; font-family: inherit; font-size: 13px; transition: all 0.2s; }
+    .btn-secondary:hover { border-color: var(--green-dim); color: var(--green); }
+    section { padding: 80px 60px; border-top: 1px solid var(--border); }
+    .section-prompt { font-size: 12px; color: var(--text-dim); margin-bottom: 8px; letter-spacing: 1px; }
+    .section-prompt::before { content: '$ cat '; color: var(--green); }
+    .section-prompt::after { content: '.txt'; }
+    .section-title { font-size: 30px; font-weight: 700; color: var(--green); margin-bottom: 40px; text-shadow: 0 0 15px rgba(0,255,65,0.2); }
+    .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: start; }
+    .about-text { font-size: 14px; color: #7abf7a; line-height: 1.9; }
+    .about-text::before { content: '// '; color: var(--text-muted); }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .stat-card { background: var(--card); border: 1px solid var(--border); padding: 20px; border-radius: 6px; text-align: center; transition: all 0.2s; position: relative; overflow: hidden; }
+    .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--green); opacity: 0; transition: opacity 0.2s; }
+    .stat-card:hover { border-color: var(--green-dim); } .stat-card:hover::before { opacity: 1; }
+    .stat-number { font-size: 28px; font-weight: 700; color: var(--green); }
+    .stat-label { font-size: 11px; color: var(--text-dim); margin-top: 4px; letter-spacing: 1px; }
+    .edu-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 28px 32px; position: relative; overflow: hidden; transition: all 0.2s; max-width: 680px; }
+    .edu-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--green); }
+    .edu-card:hover { border-color: var(--green-dim); box-shadow: 0 0 24px rgba(0,255,65,0.06); }
+    .edu-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+    .edu-degree { font-size: 16px; font-weight: 700; color: var(--green); }
+    .edu-date { font-size: 12px; color: var(--text-dim); border: 1px solid var(--border); padding: 3px 10px; border-radius: 3px; }
+    .edu-college { font-size: 13px; color: #7abf7a; margin-bottom: 12px; }
+    .edu-meta { display: flex; gap: 10px; flex-wrap: wrap; }
+    .edu-chip { background: var(--bg); border: 1px solid var(--text-muted); color: var(--text-dim); padding: 4px 12px; border-radius: 3px; font-size: 12px; }
+    .edu-chip.highlight { border-color: var(--green-dim); color: var(--green); }
+    .skills-section-note { font-size: 12px; color: var(--text-dim); margin-bottom: 20px; font-style: italic; }
+    .skills-section-note::before { content: '// '; color: var(--text-muted); }
+    .skills-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .skill-tag { background: var(--card); border: 1px solid var(--border); color: var(--green-dim); padding: 7px 16px; border-radius: 4px; font-size: 13px; font-family: inherit; transition: all 0.2s; }
+    .skill-tag::before { content: '< '; color: var(--text-muted); font-size: 11px; }
+    .skill-tag::after { content: ' />'; color: var(--text-muted); font-size: 11px; }
+    .skill-tag:hover { border-color: var(--green); color: var(--green); box-shadow: 0 0 12px rgba(0,255,65,0.1); }
+    .add-skill-btn { background: transparent; border: 1px dashed var(--text-dim); color: var(--text-dim); padding: 7px 16px; border-radius: 4px; font-size: 13px; font-family: inherit; cursor: pointer; transition: all 0.2s; }
+    .add-skill-btn:hover { border-color: var(--green); color: var(--green); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 20px; }
+    .project-card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 26px; transition: all 0.2s; position: relative; overflow: hidden; }
+    .project-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--green); opacity: 0; transition: opacity 0.2s; }
+    .project-card:hover { border-color: var(--green-dim); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,255,65,0.07); }
+    .project-card:hover::before { opacity: 1; }
+    .project-badge { display: inline-block; background: var(--green-dark); color: var(--green-dim); padding: 3px 10px; border-radius: 3px; font-size: 10px; margin-bottom: 14px; border: 1px solid rgba(0,255,65,0.2); letter-spacing: 1px; text-transform: uppercase; }
+    .project-title { font-size: 17px; font-weight: 700; color: var(--green); margin-bottom: 10px; }
+    .project-desc { font-size: 13px; color: #6a9a6a; line-height: 1.7; margin-bottom: 16px; }
+    .project-tech { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; }
+    .tech-chip { background: var(--bg); border: 1px solid var(--text-muted); color: var(--text-dim); padding: 3px 9px; border-radius: 3px; font-size: 11px; font-family: inherit; }
+    .project-links { display: flex; gap: 10px; }
+    .project-link { font-size: 12px; color: var(--green-dim); text-decoration: none; border: 1px solid rgba(0,255,65,0.2); padding: 5px 12px; border-radius: 4px; font-family: inherit; transition: all 0.2s; }
+    .project-link::before { content: '→ '; }
+    .project-link:hover { background: var(--green-glow); color: var(--green); border-color: var(--green); }
+    .project-wip { font-size: 12px; color: var(--text-dim); font-style: italic; margin-top: 10px; }
+    .project-wip::before { content: '// '; color: var(--text-muted); }
+    .add-project-btn { background: transparent; border: 1px dashed var(--text-dim); border-radius: 6px; padding: 28px; color: var(--text-dim); font-size: 13px; font-family: inherit; cursor: pointer; width: 100%; text-align: center; transition: all 0.2s; }
+    .add-project-btn:hover { border-color: var(--green); color: var(--green); }
+    .contact-terminal { background: var(--card); border: 1px solid var(--border); border-radius: 8px; max-width: 620px; margin: 0 auto; overflow: hidden; }
+    .contact-bar { background: #111; padding: 10px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+    .contact-body { padding: 32px 36px; }
+    .c-line { font-size: 14px; margin-bottom: 8px; color: #6a9a6a; line-height: 1.7; }
+    .c-line span { color: var(--green); }
+    .contact-links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+    .contact-link { background: var(--bg); border: 1px solid var(--border); color: var(--text-dim); padding: 10px 22px; border-radius: 4px; text-decoration: none; font-family: inherit; font-size: 13px; transition: all 0.2s; }
+    .contact-link::before { content: '→ '; color: var(--green); }
+    .contact-link:hover { border-color: var(--green); color: var(--green); }
+    footer { text-align: center; padding: 28px; color: var(--text-dim); font-size: 12px; border-top: 1px solid var(--border); letter-spacing: 1px; }
+    @media (max-width: 768px) { nav { padding: 12px 20px; } #hero, section { padding: 90px 20px 50px; } .terminal-body { padding: 20px; } .about-grid { grid-template-columns: 1fr; } .nav-links { display: none; } .edu-header { flex-direction: column; } }
+  </style>
+</head>
+<body>
+
+<div class="edit-hint">✏️ click any text to edit</div>
+
+<nav>
+  <div class="nav-logo" contenteditable="true">toral@dev</div>
+  <div class="nav-links">
+    <a href="#about">about</a>
+    <a href="#education">education</a>
+    <a href="#skills">skills</a>
+    <a href="#projects">projects</a>
+    <a href="#contact">contact</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="terminal-window">
+    <div class="terminal-bar">
+      <div class="dot red"></div><div class="dot yellow"></div><div class="dot green-dot"></div>
+      <span class="terminal-title">toral_biyani — bash</span>
+    </div>
+    <div class="terminal-body">
+      <div class="t-line t-prompt" contenteditable="true">whoami</div>
+      <span class="t-name" contenteditable="true">Toral Biyani</span>
+      <div class="t-line t-tag" contenteditable="true">// First Year CE Student · Aspiring Cybersecurity Engineer</div>
+      <div class="t-blank"></div>
+      <div class="t-line t-prompt" contenteditable="true">cat about.txt</div>
+      <div class="t-tagline" contenteditable="true">Computer Engineering student who builds things that solve real problems.</div>
+      <div class="t-oneliner">Code, create, deploy — one problem at a time.</div>
+      <div class="t-blank"></div>
+      <div class="t-line t-prompt">ls projects/</div>
+      <div class="t-line t-output" style="color:var(--green-dim)">ReviewIQ &nbsp;&nbsp; AnnaSetu &nbsp;&nbsp; SmartToDo &nbsp;&nbsp; RPGSystem &nbsp;&nbsp; SecureFS</div>
+      <div class="t-blank"></div>
+      <div class="hero-btns">
+        <a href="#projects" class="btn-primary">view_projects</a>
+        <a href="#contact" class="btn-secondary">get_in_touch</a>
+      </div>
+      <div class="t-blank"></div>
+      <div class="t-line" style="color:var(--text-dim)"><span class="t-cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-prompt" contenteditable="true">about_me</div>
+  <div class="section-title">About Me</div>
+  <div class="about-grid">
+    <p class="about-text" contenteditable="true">I'm Toral, a First Year CE student who loves building things for the real world. From unifying restaurant reviews to bridging food waste with hunger — I try to build with purpose. I'm actively learning every day and I'm drawn towards cybersecurity as the direction I want to take my career. Still early, but very intentional about where I'm headed.</p>
+    <div class="about-stats">
+      <div class="stat-card"><div class="stat-number" contenteditable="true">2</div><div class="stat-label" contenteditable="true">hackathon_projects</div></div>
+      <div class="stat-card"><div class="stat-number" contenteditable="true">5+</div><div class="stat-label" contenteditable="true">projects_built</div></div>
+      <div class="stat-card"><div class="stat-number" contenteditable="true">8.68</div><div class="stat-label" contenteditable="true">cgpa_sem1</div></div>
+      <div class="stat-card"><div class="stat-number" contenteditable="true">∞</div><div class="stat-label" contenteditable="true">curiosity.exe</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="section-prompt" contenteditable="true">education</div>
+  <div class="section-title">Education</div>
+  <div class="edu-card">
+    <div class="edu-header">
+      <div class="edu-degree" contenteditable="true">B.Tech — Computer Engineering</div>
+      <div class="edu-date" contenteditable="true">2026 — Present</div>
+    </div>
+    <div class="edu-college" contenteditable="true">NMIMS Navi Mumbai, Kharghar</div>
+    <div class="edu-meta">
+      <div class="edu-chip highlight" contenteditable="true">CGPA: 8.68 (Sem 1)</div>
+      <div class="edu-chip" contenteditable="true">Year 1</div>
+      <div class="edu-chip" contenteditable="true">OOP</div>
+      <div class="edu-chip" contenteditable="true">Web Development</div>
+      <div class="edu-chip" contenteditable="true">Data Structures</div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-prompt" contenteditable="true">skills</div>
+  <div class="section-title">Skills & Technologies</div>
+  <p class="skills-section-note">Currently building proficiency — always learning, always improving</p>
+  <div class="skills-grid" id="skillsGrid">
+    <span class="skill-tag" contenteditable="true">Python</span>
+    <span class="skill-tag" contenteditable="true">C</span>
+    <span class="skill-tag" contenteditable="true">Java</span>
+    <span class="skill-tag" contenteditable="true">JavaScript</span>
+    <span class="skill-tag" contenteditable="true">HTML & CSS</span>
+    <span class="skill-tag" contenteditable="true">Git & GitHub</span>
+    <span class="skill-tag" contenteditable="true">Web Development</span>
+    <button class="add-skill-btn" onclick="addSkill()">+ add_skill</button>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-prompt" contenteditable="true">projects</div>
+  <div class="section-title">Projects</div>
+  <div class="projects-grid" id="projectsGrid">
+
+    <div class="project-card">
+      <div class="project-badge" contenteditable="true">🏆 Hackathon · Live</div>
+      <div class="project-title" contenteditable="true">ReviewIQ</div>
+      <div class="project-desc" contenteditable="true">A unified review dashboard aggregating feedback from Google, Swiggy, Zomato, and an internal web app — all on one platform. Built to eliminate the chaos of tracking customer reviews across multiple tools.</div>
+      <div class="project-tech">
+        <span class="tech-chip" contenteditable="true">JavaScript</span>
+        <span class="tech-chip" contenteditable="true">HTML & CSS</span>
+        <span class="tech-chip" contenteditable="true">Dashboard</span>
+      </div>
+      <div class="project-links">
+        <a href="https://reviewiq-mocha.vercel.app/" class="project-link" target="_blank">Live Demo</a>
+        <a href="https://github.com/toral-7/Executors-PS4" class="project-link" target="_blank">GitHub</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-badge" contenteditable="true">🏆 Hackathon · Live</div>
+      <div class="project-title" contenteditable="true">AnnaSetu</div>
+      <div class="project-desc" contenteditable="true">A platform bridging restaurants with surplus food and NGOs in need. AnnaSetu ("Food Bridge") connects two communities to simultaneously reduce food waste and fight hunger.</div>
+      <div class="project-tech">
+        <span class="tech-chip" contenteditable="true">HTML</span>
+        <span class="tech-chip" contenteditable="true">CSS</span>
+        <span class="tech-chip" contenteditable="true">JavaScript</span>
+      </div>
+      <div class="project-links">
+        <a href="https://foodbridge-d9a74.web.app/" class="project-link" target="_blank">Live Demo</a>
+        <a href="https://github.com/Shashwat-Chavarkar26/Techsprint" class="project-link" target="_blank">GitHub</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-badge" contenteditable="true">💡 Personal · Deployed</div>
+      <div class="project-title" contenteditable="true">Smart To-Do App</div>
+      <div class="project-desc" contenteditable="true">A smart task management web app with a clean, intuitive UI. Built and deployed as a personal project to sharpen frontend skills and explore productivity tooling.</div>
+      <div class="project-tech">
+        <span class="tech-chip" contenteditable="true">HTML</span>
+        <span class="tech-chip" contenteditable="true">CSS</span>
+        <span class="tech-chip" contenteditable="true">JavaScript</span>
+      </div>
+      <div class="project-links">
+        <a href="https://toral-7.github.io/Smart-To-do-App/" class="project-link" target="_blank">Live Demo</a>
+        <a href="https://github.com/toral-7/Smart-To-do-App" class="project-link" target="_blank">GitHub</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-badge" contenteditable="true">📚 College · In Progress</div>
+      <div class="project-title" contenteditable="true">RPG Game System</div>
+      <div class="project-desc" contenteditable="true">An OOP-based RPG engine built for coursework. Covers inheritance, polymorphism, and encapsulation through a game structure.</div>
+      <div class="project-tech">
+        <span class="tech-chip" contenteditable="true">Java</span>
+        <span class="tech-chip" contenteditable="true">OOP</span>
+      </div>
+      <p class="project-wip">work in progress</p>
+    </div>
+
+    <div class="project-card">
+      <div class="project-badge" contenteditable="true">📚 College · In Progress</div>
+      <div class="project-title" contenteditable="true">Secure File Storage System</div>
+      <div class="project-desc" contenteditable="true">A secure file management web app covering encrypted upload, storage, and retrieval — built for web dev coursework and aligned with my interest in cybersecurity fundamentals.</div>
+      <div class="project-tech">
+        <span class="tech-chip" contenteditable="true">HTML</span>
+        <span class="tech-chip" contenteditable="true">CSS</span>
+        <span class="tech-chip" contenteditable="true">JavaScript</span>
+        <span class="tech-chip" contenteditable="true">Security</span>
+      </div>
+      <p class="project-wip">work in progress</p>
+    </div>
+
+    <button class="add-project-btn" onclick="addProject()">+ add_project()</button>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-prompt" contenteditable="true">contact</div>
+  <div class="section-title">Contact</div>
+  <div class="contact-terminal">
+    <div class="contact-bar">
+      <div class="dot red"></div><div class="dot yellow"></div><div class="dot green-dot"></div>
+      <span class="terminal-title">connect — ssh</span>
+    </div>
+    <div class="contact-body">
+      <div class="c-line">$ <span>ping</span> toral.biyani@gmail.com</div>
+      <div class="c-line" contenteditable="true">// Open to opportunities, collaborations, and conversations about tech. Feel free to reach out!</div>
+      <div class="c-line" style="margin-top:12px;">$ <span contenteditable="true">toral.biyani@gmail.com</span></div>
+      <div class="c-line">$ <span contenteditable="true">+91 91528 34051</span></div>
+      <div class="contact-links">
+        <a href="https://github.com/toral-7" class="contact-link" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/toral-biyani-683ba9376/" class="contact-link" target="_blank">LinkedIn</a>
+        <a href="https://drive.google.com/file/d/1hPYd98aHu10ZrvgjDI_PnOApwJtbGR93/view?usp=sharing" class="contact-link" target="_blank">Download CV</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>// made with 💚 by toral biyani</footer>
+
+<script>
+  function addSkill() {
+    const grid = document.getElementById('skillsGrid');
+    const btn = grid.querySelector('.add-skill-btn');
+    const tag = document.createElement('span');
+    tag.className = 'skill-tag';
+    tag.contentEditable = 'true';
+    tag.textContent = 'new_skill';
+    grid.insertBefore(tag, btn);
+    tag.focus();
+    const range = document.createRange();
+    range.selectNodeContents(tag);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+  }
+  function addProject() {
+    const grid = document.getElementById('projectsGrid');
+    const btn = grid.querySelector('.add-project-btn');
+    const card = document.createElement('div');
+    card.className = 'project-card';
+    card.innerHTML = `
+      <div class="project-badge" contenteditable="true">🚀 project</div>
+      <div class="project-title" contenteditable="true">project_name</div>
+      <div class="project-desc" contenteditable="true">// describe your project here...</div>
+      <div class="project-tech"><span class="tech-chip" contenteditable="true">tech</span></div>
+      <div class="project-links"><a href="#" class="project-link">GitHub</a></div>`;
+    grid.insertBefore(card, btn);
+  }
+  document.querySelectorAll('.nav-logo, .stat-number, .stat-label, .project-title, .t-name').forEach(el => {
+    el.addEventListener('keydown', e => { if (e.key === 'Enter') e.preventDefault(); });
+  });
+</script>
+</body>
+</html>
